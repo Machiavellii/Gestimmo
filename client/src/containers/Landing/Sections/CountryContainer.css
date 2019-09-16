@@ -1,0 +1,23 @@
+.country-container {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../../assets/img/swiss.jpg);
+    height: 40vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.hard-code1,
+.hard-code2,
+.hard-code3,
+.hard-code4 {
+    /*background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../../assets/img/swiss.jpg);*/
+    height: 40vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.hard-code1 {background-image: url(../../../assets/img/modern-residential-building-entrance-estate-PEV4T5F.jpg)}
+.hard-code2 {background-image: url(../../../assets/img/landscape-of-switzerland-PEAL7R4.jpg)}
+.hard-code3 {background-image: url(../../../assets/img/aerial-view-of-montreux-waterfront-switzerland-P2GTES8.jpg)}
+.hard-code4 {background-image: url(../../../assets/img/aerial-view-of-ouchy-waterfront-in-lausanne-5CBZWQX.jpg)}
