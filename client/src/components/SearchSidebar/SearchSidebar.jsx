@@ -1,41 +1,26 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
-import Button from "@material-ui/core/Button";
-import { Grid } from "@material-ui/core";
-import Divider from "@material-ui/core/Divider";
-import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import { KeyboardDatePicker, DatePicker } from "@material-ui/pickers";
-import axios from "axios";
-import config from "../../config/config";
-import { NotificationManager } from "react-notifications";
-import { connect } from "react-redux";
-import t from "../../constants/language";
-import { Favorite, FavoriteBorder } from "@material-ui/icons";
-import IconButton from "@material-ui/core/IconButton";
+import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
-import GridContainer from "components/Grid/GridContainer";
-import GridItem from "components/Grid/GridItem";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import * as constants from "constants/data.json";
+import TextField from '@material-ui/core/TextField';
+
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+import { connect } from 'react-redux';
+import t from '../../constants/language';
+
+import Typography from '@material-ui/core/Typography';
+import GridContainer from 'components/Grid/GridContainer';
+import GridItem from 'components/Grid/GridItem';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import * as constants from 'constants/data.json';
+
 const styles = theme => ({
   card: {
     maxWidth: 345
@@ -48,12 +33,12 @@ const styles = theme => ({
     marginBottom: theme.spacing(0)
   },
   itemsCenter: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   selectedItem: {
-    backgroundColor: "#bdbdbd"
+    backgroundColor: '#bdbdbd'
   }
 });
 
@@ -62,10 +47,11 @@ class SearchSidebar extends Component {
     super(props);
     const { adsInfo } = this.props;
     this.state = {
-      cityList: ["All", "Pully", "Renens", "Lausanne", "Bussigny"],
-      city: "",
+      // cityList: ["All", "Pully", "Renens", "Lausanne", "Bussigny"],
+      cityList: constants.cityList,
+      city: '',
       cityIndex: 0,
-      type: "rent", //sale
+      type: 'rent', //sale
       floor_min: 0,
       floor_max: 0,
       piece_min: 0,
@@ -74,31 +60,23 @@ class SearchSidebar extends Component {
       price_max: 0,
       surface_min: 0,
       surface_max: 0,
-      price_currency: "CHF",
+      price_currency: 'CHF',
 
       categoryIndex: 0,
-      propertyIndex: 0
+      propertyIndex: 0,
+      swissCantons: [],
+      franceCantons: [],
+      swissCities: [],
+      franceCities: []
     };
   }
 
   componentDidMount() {
     this.requestSearch();
   }
-  componentWillReceiveProps(newProps) {
-    // const { adsInfo } = newProps
-    // this.state = {
-    //   adsType: adsInfo.adsType,
-    //   boatName: adsInfo.boatName,
-    //   arrivalDate: adsInfo.arrivalDate,
-    //   leaveDate: adsInfo.leaveDate,
-    //   harbour: adsInfo.harbour, //my harbour
-    //   destHarbour: adsInfo.destHarbour,
-    // };
-    // this.getBoatNames();
-  }
 
   requestSearch = () => {
-    console.log("requestSearch called");
+    console.log('requestSearch called');
     this.props.handleSearch({
       city: this.state.city,
       type: this.state.type, //sale
@@ -148,7 +126,32 @@ class SearchSidebar extends Component {
     });
   };
 
+  handleSwiss = () => {
+    this.setState({ swissCantons: constants.cantonsList });
+  };
+
+  handleSwissCities = i => {
+    if (constants.cantonsList[i]) {
+      this.setState({ swissCities: constants.cityList[i] });
+    }
+  };
+  handleFrance = () => {
+    this.setState({ franceCantons: constants.frCantonList });
+  };
+
+  handleFranceCities = i => {
+    if (constants.frCantonList[i]) {
+      this.setState({ franceCities: constants.frCityList[i] });
+    }
+  };
+
   render() {
+    const {
+      swissCantons,
+      swissCities,
+      franceCantons,
+      franceCities
+    } = this.state;
     const { classes } = this.props;
     const {
       cityList,
@@ -182,7 +185,7 @@ class SearchSidebar extends Component {
               name="type"
               className={classes.group}
               value={type}
-              onChange={this.handleInput("type")}
+              onChange={this.handleInput('type')}
             >
               <FormControlLabel
                 value="rent"
@@ -200,7 +203,6 @@ class SearchSidebar extends Component {
           </ExpansionPanelDetails>
         </ExpansionPanel>
 
-
         <ExpansionPanel>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
@@ -216,15 +218,15 @@ class SearchSidebar extends Component {
               component="nav"
               aria-labelledby="nested-list-subheader"
               className={classes.root}
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
             >
               <ListItem
                 button
                 key={0}
-                onClick={() => this.handleCategory("", 0)}
+                onClick={() => this.handleCategory('', 0)}
                 className={0 === categoryIndex && classes.selectedItem}
               >
-                {"Any"}
+                {'Any'}
               </ListItem>
               {constants.categoryList[this.props.lang].map((item, index) => (
                 <ListItem
@@ -241,8 +243,6 @@ class SearchSidebar extends Component {
             </List>
           </ExpansionPanelDetails>
         </ExpansionPanel>
-        
-
 
         <ExpansionPanel>
           <ExpansionPanelSummary
@@ -259,24 +259,17 @@ class SearchSidebar extends Component {
               component="nav"
               aria-labelledby="nested-list-subheader"
               className={classes.root}
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
             >
-              {constants.countryList2[this.props.lang].map((item, index) => (
-                <ListItem
-                  button
-                  key={index + 1}
-                  className={
-                    index + 1 === categoryIndex && classes.selectedItem
-                  }
-                  //onClick={() => this.handleCategory(item, index + 1)}
-                >
-                  {item}
-                </ListItem>
-              ))}
+              <ListItem button onClick={() => this.handleSwiss()}>
+                {constants.countryList2[this.props.lang][0]}
+              </ListItem>
+              <ListItem button onClick={() => this.handleFrance()}>
+                {constants.countryList2[this.props.lang][1]}
+              </ListItem>
             </List>
           </ExpansionPanelDetails>
         </ExpansionPanel>
-
 
         <ExpansionPanel>
           <ExpansionPanelSummary
@@ -293,16 +286,29 @@ class SearchSidebar extends Component {
               component="nav"
               aria-labelledby="nested-list-subheader"
               className={classes.root}
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
             >
-              {constants.cantonsList.map((item, index) => (
+              {swissCantons.map((item, index) => (
                 <ListItem
                   button
-                  key={index + 1}
+                  key={index}
                   className={
                     index + 1 === categoryIndex && classes.selectedItem
                   }
-                  //onClick={() => this.handleCategory(item, index + 1)}
+                  onClick={() => this.handleSwissCities(index)}
+                >
+                  {item}
+                </ListItem>
+              ))}
+
+              {franceCantons.map((item, index) => (
+                <ListItem
+                  button
+                  key={index}
+                  className={
+                    index + 1 === categoryIndex && classes.selectedItem
+                  }
+                  onClick={() => this.handleFranceCities(index)}
                 >
                   {item}
                 </ListItem>
@@ -310,11 +316,6 @@ class SearchSidebar extends Component {
             </List>
           </ExpansionPanelDetails>
         </ExpansionPanel>
-
-
-
-
-
 
         {categoryIndex > 0 &&
           constants.propertyList[this.props.lang][categoryIndex - 1].length >
@@ -334,15 +335,15 @@ class SearchSidebar extends Component {
                   component="nav"
                   aria-labelledby="nested-list-subheader"
                   className={classes.root}
-                  style={{ width: "100%" }}
+                  style={{ width: '100%' }}
                 >
                   <ListItem
                     button
                     key={0}
                     className={0 === propertyIndex && classes.selectedItem}
-                    onClick={() => this.handleProperty("", 0)}
+                    onClick={() => this.handleProperty('', 0)}
                   >
-                    {"Any"}
+                    {'Any'}
                   </ListItem>
                   {constants.propertyList[this.props.lang][
                     categoryIndex - 1
@@ -377,9 +378,20 @@ class SearchSidebar extends Component {
               component="nav"
               aria-labelledby="nested-list-subheader"
               className={classes.root}
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
             >
-              {cityList.map((item, index) => (
+              {swissCities.map((item, index) => (
+                <ListItem
+                  button
+                  key={index}
+                  className={index === cityIndex && classes.selectedItem}
+                  onClick={() => this.handleCity(item, index)}
+                >
+                  {item}
+                </ListItem>
+              ))}
+
+              {franceCities.map((item, index) => (
                 <ListItem
                   button
                   key={index}
@@ -409,7 +421,7 @@ class SearchSidebar extends Component {
                   className={classes.textField}
                   margin="normal"
                   value={floor_min}
-                  onChange={this.handleInput("floor_min")}
+                  onChange={this.handleInput('floor_min')}
                   fullWidth
                   type="number"
                 />
@@ -422,7 +434,7 @@ class SearchSidebar extends Component {
                   className={classes.textField}
                   margin="normal"
                   value={floor_max}
-                  onChange={this.handleInput("floor_max")}
+                  onChange={this.handleInput('floor_max')}
                   fullWidth
                   type="number"
                 />
@@ -447,7 +459,7 @@ class SearchSidebar extends Component {
                   className={classes.textField}
                   margin="normal"
                   value={surface_min}
-                  onChange={this.handleInput("surface_min")}
+                  onChange={this.handleInput('surface_min')}
                   fullWidth
                   type="number"
                 />
@@ -460,7 +472,7 @@ class SearchSidebar extends Component {
                   className={classes.textField}
                   margin="normal"
                   value={surface_max}
-                  onChange={this.handleInput("surface_max")}
+                  onChange={this.handleInput('surface_max')}
                   fullWidth
                   type="number"
                 />
@@ -485,7 +497,7 @@ class SearchSidebar extends Component {
                   className={classes.textField}
                   margin="normal"
                   value={piece_min}
-                  onChange={this.handleInput("piece_min")}
+                  onChange={this.handleInput('piece_min')}
                   fullWidth
                   type="number"
                 />
@@ -498,7 +510,7 @@ class SearchSidebar extends Component {
                   className={classes.textField}
                   margin="normal"
                   value={piece_max}
-                  onChange={this.handleInput("piece_max")}
+                  onChange={this.handleInput('piece_max')}
                   fullWidth
                   type="number"
                 />
@@ -523,7 +535,7 @@ class SearchSidebar extends Component {
                   className={classes.textField}
                   margin="normal"
                   value={price_min}
-                  onChange={this.handleInput("price_min")}
+                  onChange={this.handleInput('price_min')}
                   fullWidth
                   type="number"
                 />
@@ -536,7 +548,7 @@ class SearchSidebar extends Component {
                   className={classes.textField}
                   margin="normal"
                   value={price_max}
-                  onChange={this.handleInput("price_max")}
+                  onChange={this.handleInput('price_max')}
                   fullWidth
                   type="number"
                 />

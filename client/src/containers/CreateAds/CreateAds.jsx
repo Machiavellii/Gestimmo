@@ -917,6 +917,9 @@ class CreateAds extends Component {
                     value={title}
                     fullWidth
                     onChange={this.handleInput("title")}
+                    inputProps={{
+                      maxLength: 50,
+                      }}
                   />
                 </GridItem>
                 <GridItem xs={12}>

@@ -5,28 +5,13 @@ import { NotificationManager } from 'react-notifications';
 import { connect } from 'react-redux';
 import t from '../../constants/language';
 import Grid from '@material-ui/core/Grid';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
+
 import GridContainer from 'components/Grid/GridContainer.jsx';
 import GridItem from 'components/Grid/GridItem.jsx';
-import CustomInput from 'components/CustomInput/CustomInput.jsx';
-import TextField from '@material-ui/core/TextField';
+
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
-import InputLabel from '@material-ui/core/InputLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import { DatePicker } from '@material-ui/pickers';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import ViewListIcon from '@material-ui/icons/ViewList';
@@ -48,26 +33,18 @@ import {
   Email,
   Phone
 } from '@material-ui/icons';
-import Box from '@material-ui/core/Box';
-import FileDrop from 'react-file-drop';
+
 import Container from '@material-ui/core/Container';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import windowSize from 'react-window-size';
-import Fade from '@material-ui/core/Fade';
-import LoadingOverlay from 'react-loading-overlay';
+
 
 import AdsCard from 'components/adscard';
 import * as api from 'service/Api';
 import { isAuthenticated } from 'service/authentication';
-import {
-  BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile
-} from 'react-device-detect';
+
 import { Divider } from '@material-ui/core';
 import Input from '@material-ui/core/Input';
-import { formatNumber } from 'utils/index';
 
 const styles = theme => ({
   content: {

@@ -173,6 +173,7 @@ class AdsCard extends Component {
               className={classes.media}
               image={this.getPhotoUrl()}
               title={title}
+              
             />
 
             <CardContent>
